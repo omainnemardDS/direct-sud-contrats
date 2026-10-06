@@ -289,16 +289,6 @@
 
   <p class="intro">Choisissez l'établissement et le mode de rémunération, complétez les informations du salarié, puis téléchargez le contrat Word prêt à signer.</p>
 
-  <div class="section" style="padding:18px 22px;margin-bottom:22px;">
-    <h2 style="font-size:15px;">Pré-remplir depuis le mail récap JotForm</h2>
-    <div class="section-hint">Collez ici le texte du mail reçu à la soumission de la fiche salarié — les champs ci-dessous se remplissent automatiquement.</div>
-    <textarea id="emailPasteArea" rows="5" placeholder="Collez le texte du mail ici…"></textarea>
-    <div class="actions" style="margin-top:10px;">
-      <button type="button" class="btn-mini" id="btnParseEmail">Pré-remplir depuis le mail</button>
-      <span id="parseStatus" style="font-size:12.5px;color:var(--ink-soft);"></span>
-    </div>
-  </div>
-
   <!-- STEP 1 : selection -->
   <div class="choice-group">
     <div class="choice-label">Établissement</div>
@@ -2004,26 +1994,6 @@ ${bodyXml}
     populateNationalites();
 
     autofillFromURL();
-
-    document.getElementById('btnParseEmail').addEventListener('click', () => {
-      const txt = document.getElementById('emailPasteArea').value;
-      const statusEl = document.getElementById('parseStatus');
-      if (!txt.trim()){
-        statusEl.textContent = 'Collez le texte du mail avant de pré-remplir.';
-        statusEl.style.color = 'var(--error)';
-        return;
-      }
-      const obj = parseEmailText(txt);
-      const filled = Object.values(obj).filter(Boolean).length;
-      if (!filled){
-        statusEl.textContent = "Aucun champ reconnu — le format du mail collé ne correspond pas au modèle attendu.";
-        statusEl.style.color = 'var(--error)';
-        return;
-      }
-      applyFields(obj, '✓ Informations pré-remplies depuis le mail collé — vérifiez avant de générer le contrat.');
-      statusEl.textContent = `${filled} champ(s) rempli(s). Vérifiez chaque champ ci-dessous.`;
-      statusEl.style.color = 'var(--brand-green-dark)';
-    });
 
     document.getElementById('f_date_debut').addEventListener('change', updateDureeComputed);
     document.getElementById('f_date_fin').addEventListener('change', updateDureeComputed);
